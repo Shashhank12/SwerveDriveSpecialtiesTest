@@ -37,7 +37,7 @@ public class SwerveDriveOdometry extends CommandBase {
   public void execute() {
     pos = RobotContainer.m_swerve.robotPosition;
 
-    if(Math.round(pos.getX() * 10) != Math.round(targetXPos * 10)){
+    if(Math.round(pos.getX() * 5) != Math.round(targetXPos * 5)){
       if(pos.getX() < targetXPos) {
         x_vel = Constants.AUTONOMOUS_VELOCITY_PER_SECOND;
       } else if(pos.getX() > targetXPos) {
@@ -47,7 +47,7 @@ public class SwerveDriveOdometry extends CommandBase {
       x_vel = 0;
     }
 
-    if(Math.round(pos.getY() * 10) != Math.round(targetYPos * 10)){
+    if(Math.round(pos.getY() * 5) != Math.round(targetYPos * 5)){
       if(pos.getY() < targetYPos) {
         y_vel = Constants.AUTONOMOUS_VELOCITY_PER_SECOND;
       } else if(pos.getY() > targetYPos) {
@@ -68,13 +68,16 @@ public class SwerveDriveOdometry extends CommandBase {
     }
 
     RobotContainer.m_swerve.setChasisSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(x_vel, y_vel,
-        0, RobotContainer.m_swerve.gyroAngle()));
+        turn_vel, RobotContainer.m_swerve.gyroAngle()));
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.m_swerve.setChasisSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0,
+        0, RobotContainer.m_swerve.gyroAngle()));
+  }
 
   // Returns true when the command should end.
   @Override
