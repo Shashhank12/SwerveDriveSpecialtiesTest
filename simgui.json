@@ -1,0 +1,11 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/ExampleSubsystem": "Subsystem",
+      "/LiveWindow/Swerve": "Subsystem",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/Field/hi": "Field2d"
+    }
+  }
+}
