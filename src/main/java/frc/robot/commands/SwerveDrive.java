@@ -24,20 +24,20 @@ public class SwerveDrive extends CommandBase {
     addRequirements(RobotContainer.m_swerve);
   }
 
-  private static double deadbandCalc(double joystickRawAxis) {
-    if (Math.abs(joystickRawAxis) > 0.01) {
-      if (joystickRawAxis > 0.01) {
-        return (joystickRawAxis - 0.01) / (1.0 - 0.01);
+  private static double deadbandCalc(double joystickRawAxis, double deadband) {
+    if (Math.abs(joystickRawAxis) > deadband) {
+      if (joystickRawAxis > deadband) {
+        return (joystickRawAxis - deadband) / (1.0 - deadband);
       } else {
-        return (joystickRawAxis + 0.01) / (1.0 - 0.01);
+        return (joystickRawAxis + deadband) / (1.0 - deadband);
       }
     } else {
       return 0.0;
     }
   }
 
-  private static double squareAxis(double value) {
-    value = deadbandCalc(value);
+  private static double squareAxis(double value, double deadband) {
+    value = deadbandCalc(value, deadband);
     value = Math.copySign(value * value, value);
     return value;
   }
@@ -49,21 +49,21 @@ public class SwerveDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Constants.M_JOYSTICK == Swerve.JoystickConfiguration.Joystick) {
-      xAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(0)) * Constants.MAX_METERS_PER_SECOND;
-      yAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(1)) * -Constants.MAX_METERS_PER_SECOND;
-      rotationalXAxisValue = () -> -squareAxis(RobotContainer.driveStick.getRawAxis(Constants.ROTATIONAL_AXIS)) * Constants.MAX_RADIANS_PER_SECOND;
-    } else if(Constants.M_JOYSTICK == Swerve.JoystickConfiguration.Controller) {
+    // if(Constants.M_JOYSTICK == Swerve.JoystickConfiguration.Joystick) {
+    //   xAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(0)) * Constants.MAX_METERS_PER_SECOND;
+    //   yAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(1)) * -Constants.MAX_METERS_PER_SECOND;
+    //   rotationalXAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(Constants.ROTATIONAL_AXIS)) * Constants.MAX_RADIANS_PER_SECOND;
+    // } else if(Constants.M_JOYSTICK == Swerve.JoystickConfiguration.Controller) {
     
-      xAxisValue = () -> -squareAxis(RobotContainer.driveStick.getRawAxis(Constants.X_AXIS)) * Constants.MAX_METERS_PER_SECOND;
-      yAxisValue = () -> -squareAxis(RobotContainer.driveStick.getRawAxis(Constants.Y_AXIS)) * -Constants.MAX_METERS_PER_SECOND;
-      rotationalXAxisValue = () -> -squareAxis(RobotContainer.driveStick.getRawAxis(Constants.ROTATIONAL_AXIS)) * Constants.MAX_RADIANS_PER_SECOND;
+      // xAxisValue = () -> -squareAxis(RobotContainer.driveStick.getRawAxis(Constants.X_AXIS)) * Constants.MAX_METERS_PER_SECOND;
+      // yAxisValue = () -> -squareAxis(RobotContainer.driveStick.getRawAxis(Constants.Y_AXIS)) * -Constants.MAX_METERS_PER_SECOND;
+      // rotationalXAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(Constants.ROTATIONAL_AXIS)) * Constants.MAX_RADIANS_PER_SECOND;
 
-    } else if(Constants.M_JOYSTICK == Swerve.JoystickConfiguration.RotationalJoystick) {
-      xAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(0)) * Constants.MAX_METERS_PER_SECOND;
-      yAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(1)) * -Constants.MAX_METERS_PER_SECOND;
-      rotationalXAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(2)) * Constants.MAX_RADIANS_PER_SECOND;
-    }
+    //} else if(Constants.M_JOYSTICK == Swerve.JoystickConfiguration.RotationalJoystick) {
+      xAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(0), 0.01) * Constants.MAX_METERS_PER_SECOND;
+      yAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(1), 0.01) * -Constants.MAX_METERS_PER_SECOND;
+      rotationalXAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(2), 0.15) * -Constants.MAX_RADIANS_PER_SECOND;
+    //}
     
     RobotContainer.m_swerve.setChasisSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(xAxisValue.getAsDouble(), yAxisValue.getAsDouble(),
         rotationalXAxisValue.getAsDouble(), RobotContainer.m_swerve.gyroAngle()));

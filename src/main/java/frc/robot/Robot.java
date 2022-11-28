@@ -87,7 +87,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.m_swerve, new SwerveDrive());
-    if(RobotContainer.m_recal.get()){
+    if(RobotContainer.m_reset.get()){
       RobotContainer.m_swerve.resetGyro();
 
     }

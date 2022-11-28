@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper;
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -37,7 +38,7 @@ public class Swerve extends SubsystemBase {
   //IMU
   Pigeon2 imu = new Pigeon2(Constants.PIGEON_CAN);
 
-  public Pose2d robotPosition = new Pose2d(new Translation2d(0, 0), new Rotation2d(Math.toRadians(0)));
+  public Pose2d robotPosition = new Pose2d(new Translation2d(10, 5), new Rotation2d(Math.toRadians(0)));
   NetworkTableEntry joystick_x = Shuffleboard.getTab("Joystick").add("X-Axis", 0).getEntry();
   NetworkTableEntry joystick_y = Shuffleboard.getTab("Joystick").add("Y-Axis", 0).getEntry();
 
@@ -89,12 +90,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public double zAxis(){
-    if(Constants.M_JOYSTICK == JoystickConfiguration.Joystick)
-      return ((Math.round(((RobotContainer.bigdriveStick.getRawAxis(2) * -1)+1)/2))/5);
-    else if(Constants.M_JOYSTICK == JoystickConfiguration.RotationalJoystick)
-      return ((Math.round(((RobotContainer.bigdriveStick.getRawAxis(3) * -1)+1)/2))/5);
-    else
-      return 0.3;
+      return 0.3;//((Math.round(((RobotContainer.bigdriveStick.getRawAxis(3) * -1)+1)/2))/5);
   }
 
   
@@ -106,8 +102,8 @@ public class Swerve extends SubsystemBase {
     SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, speedAxis);
 
-    joystick_x.setDouble(RobotContainer.driveStick.getRawAxis(Constants.X_AXIS));
-    joystick_y.setDouble(RobotContainer.driveStick.getRawAxis(Constants.Y_AXIS));
+    joystick_x.setDouble(RobotContainer.bigdriveStick.getRawAxis(Constants.X_AXIS));
+    joystick_y.setDouble(RobotContainer.bigdriveStick.getRawAxis(Constants.Y_AXIS));
 
 
     robotPosition = m_odometry.update(gyroAngle(), moduleStates[0], moduleStates[1], moduleStates[2], moduleStates[3]);

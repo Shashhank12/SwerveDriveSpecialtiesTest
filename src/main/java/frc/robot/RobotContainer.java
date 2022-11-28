@@ -20,9 +20,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public static final Joystick driveStick = new Joystick(0);
+  //public static final Joystick driveStick = new Joystick(0);
   public static final Swerve m_swerve = new Swerve();
-  public static final JoystickButton m_recal = new JoystickButton(driveStick, 1);
+  //public static final JoystickButton m_recal = new JoystickButton(driveStick, 1);
   public static final Joystick bigdriveStick = new Joystick(2);
   public static final JoystickButton m_reset = new JoystickButton(bigdriveStick, 1);
 

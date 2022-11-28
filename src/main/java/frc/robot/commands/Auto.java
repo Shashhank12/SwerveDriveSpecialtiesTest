@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 // import edu.wpi.first.math.geometry.Pose2d;
 // import edu.wpi.first.math.geometry.Rotation2d;
 // import edu.wpi.first.math.geometry.Translation2d;
@@ -17,7 +20,6 @@ public class Auto extends SequentialCommandGroup {
   public Auto() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    //FIXME
-    addCommands(/*new SwerveDriveOdometry(new Pose2d(new Translation2d(1, 1), new Rotation2d(Math.toRadians(0))))*/);
+    addCommands(new SwerveDriveOdometry(new Pose2d(new Translation2d(0.5, 0.5), new Rotation2d(Math.toRadians(0)))));
   }
 }
