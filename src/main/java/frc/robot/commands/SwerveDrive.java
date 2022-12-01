@@ -64,9 +64,12 @@ public class SwerveDrive extends CommandBase {
       yAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(1), 0.01) * -Constants.MAX_METERS_PER_SECOND;
       rotationalXAxisValue = () -> -squareAxis(RobotContainer.bigdriveStick.getRawAxis(2), 0.15) * -Constants.MAX_RADIANS_PER_SECOND;
     //}
-    
+    //FIELD RELATIVE
     RobotContainer.m_swerve.setChasisSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(xAxisValue.getAsDouble(), yAxisValue.getAsDouble(),
         rotationalXAxisValue.getAsDouble(), RobotContainer.m_swerve.gyroAngle()));
+    //ROBOT RELATIVE
+   // RobotContainer.m_swerve.setChasisSpeed(new ChassisSpeeds(xAxisValue.getAsDouble(), yAxisValue.getAsDouble(),
+   //     rotationalXAxisValue.getAsDouble()));    
   }
 
   // Called once the command ends or is interrupted.

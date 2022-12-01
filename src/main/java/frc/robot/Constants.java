@@ -50,9 +50,9 @@ public final class Constants {
     public static final double AUTONOMOUS_RADIANS_PER_SECOND = 0.1;
 
     //joystick ports
-    public static final int X_AXIS = 4;
-    public static final int Y_AXIS = 5;
-    public static final int ROTATIONAL_AXIS = 0;
+    public static final int X_AXIS = 0; //originally port 4 (11/30/22)
+    public static final int Y_AXIS = 1; //originally port 5 (11/30/22)
+    public static final int ROTATIONAL_AXIS = 3; //originally port 0 (11/30/22)
 
     public static final double TRANSLATION_2D_METERS = 0.625/2;
 
